@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __importDefault(require("../index"));
+const index_1 = __importDefault(require("../src/index"));
 const supertest_1 = __importDefault(require("supertest"));
 describe("Express crud api testing", () => {
     describe("Testing all GET requests", () => {
@@ -27,6 +27,12 @@ describe("Express crud api testing", () => {
                 },
             ]);
         });
+    });
+    describe("get one request at /api/organizatios/:id", () => {
+        test("should return 404 response for an invalid id", async () => {
+            const res = await supertest_1.default(index_1.default).get("/api/organizations/invalid-id");
+            expect(res.status).toBe(404);
+        });
         test("Testing for get one organizations at /api/organizations", async () => {
             const { body, status } = await supertest_1.default(index_1.default).get("/api/organizations");
             expect(status).toBe(200);
@@ -46,9 +52,6 @@ describe("Express crud api testing", () => {
             };
             const res = await supertest_1.default(index_1.default).post("/api/organizations").send(newPost);
             expect(res.status).toBe(200);
-            const { body } = await supertest_1.default(index_1.default).get("/api/organizations");
-            let idx = body.indexOf(newPost);
-            expect(idx).not.toBe(-1);
         });
     });
     describe("Testing for put request at /api/organizations/:id", () => {
@@ -58,11 +61,10 @@ describe("Express crud api testing", () => {
                 ceo: "Akin",
                 country: "Nigeria",
             };
-            const { body } = supertest_1.default(index_1.default).get(`/api/organizations/`);
-            let firstOrg = body[0];
-            const res = await supertest_1.default(index_1.default)
-                .put(`/api/organizations/${firstOrg.id}`)
-                .send(newOrg);
+            //  const all = request(app).get("/api/organizations");
+            //  let { body } = all;
+            //  let firstOrg = body[0];
+            const res = await supertest_1.default(index_1.default).put(`/api/organizations/1`).send(newOrg);
             expect(res.status).toBe(200);
             expect(res.body).toStrictEqual({
                 organization: "SoftWork",

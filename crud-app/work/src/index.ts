@@ -74,9 +74,10 @@ app.delete("/api/organizations/:id", (req, res) => {
  });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
- console.log(`Server fired at http://localhost:${port}`);
-});
+const port = process.env.PORT || 3005;
+
+// app.listen(port, () => {
+//  console.log(`Server fired at http://localhost:${port}`);
+// });
 
 export default app;

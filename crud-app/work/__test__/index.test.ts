@@ -1,4 +1,4 @@
-import app from "../index";
+import app from "../src/index";
 import request from "supertest";
 
 describe("Express crud api testing", () => {
@@ -23,7 +23,13 @@ describe("Express crud api testing", () => {
     },
    ]);
   });
+ });
 
+ describe("get one request at /api/organizatios/:id", () => {
+  test("should return 404 response for an invalid id", async () => {
+   const res = await request(app).get("/api/organizations/invalid-id");
+   expect(res.status).toBe(404);
+  });
   test("Testing for get one organizations at /api/organizations", async () => {
    const { body, status } = await request(app).get("/api/organizations");
    expect(status).toBe(200);
@@ -44,9 +50,6 @@ describe("Express crud api testing", () => {
    };
    const res = await request(app).post("/api/organizations").send(newPost);
    expect(res.status).toBe(200);
-   const { body } = await request(app).get("/api/organizations");
-   let idx = body.indexOf(newPost);
-   expect(idx).not.toBe(-1);
   });
  });
 
@@ -57,12 +60,11 @@ describe("Express crud api testing", () => {
     ceo: "Akin",
     country: "Nigeria",
    };
-   const { body } = request(app).get(`/api/organizations/`);
-   let firstOrg = body[0];
+   //  const all = request(app).get("/api/organizations");
+   //  let { body } = all;
+   //  let firstOrg = body[0];
 
-   const res = await request(app)
-    .put(`/api/organizations/${firstOrg.id}`)
-    .send(newOrg);
+   const res = await request(app).put(`/api/organizations/1`).send(newOrg);
    expect(res.status).toBe(200);
    expect(res.body).toStrictEqual({
     organization: "SoftWork",
