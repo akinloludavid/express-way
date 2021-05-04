@@ -1,7 +1,28 @@
 import app from "../src/index";
 import request from "supertest";
+interface data {
+ organization: string;
+ createdAt?: "2020-08-12T19:04:55.455Z";
+ updatedAt?: "2020-08-12T19:04:55.455Z";
+ products?: string[];
+ marketValue?: string;
+ address?: string;
+ ceo: string;
+ country: string;
+ id: number;
+ noOfEmployees?: number;
+ employees?: string[];
+}
+
+let x: data = {
+  organization:'luco',
+  ceo:'zen',
+  country:'NIger',
+  id:2,
+};
 
 describe("Express crud api testing", () => {
+
  describe("Testing all GET requests", () => {
   test("Testing for get all organizations at /api/organizations", async () => {
    const res = await request(app).get("/api/organizations");
@@ -26,10 +47,12 @@ describe("Express crud api testing", () => {
  });
 
  describe("get one request at /api/organizatios/:id", () => {
+
   test("should return 404 response for an invalid id", async () => {
    const res = await request(app).get("/api/organizations/invalid-id");
    expect(res.status).toBe(404);
   });
+
   test("Testing for get one organizations at /api/organizations", async () => {
    const { body, status } = await request(app).get("/api/organizations");
    expect(status).toBe(200);
@@ -60,9 +83,7 @@ describe("Express crud api testing", () => {
     ceo: "Akin",
     country: "Nigeria",
    };
-   //  const all = request(app).get("/api/organizations");
-   //  let { body } = all;
-   //  let firstOrg = body[0];
+ 
 
    const res = await request(app).put(`/api/organizations/1`).send(newOrg);
    expect(res.status).toBe(200);

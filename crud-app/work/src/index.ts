@@ -10,8 +10,8 @@ app.use("/api/organizations", router);
 
 const port = process.env.PORT || 3005;
 
-app.listen(port, () => {
- console.log(`Server fired at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//  console.log(`Server fired at http://localhost:${port}`);
+// });
 
 export default app;
