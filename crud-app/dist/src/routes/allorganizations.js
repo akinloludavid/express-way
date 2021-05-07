@@ -25,6 +25,12 @@ router.post("/", (req, res) => {
         organization: req.body.organization,
         ceo: req.body.ceo,
         country: req.body.country,
+        createdAt: new Date(),
+        products: req.body.products,
+        marketValue: req.body.marketValue,
+        address: req.body.address,
+        noOfEmployees: req.body.noOfEmployees,
+        employees: req.body.employees,
     };
     if (!newOrg.organization || !newOrg.ceo || !newOrg.country) {
         res.status(400).send("Organization, ceo and country must be filled");
@@ -44,6 +50,12 @@ router.put("/:id", (req, res) => {
     org.organization = req.body.organization;
     org.ceo = req.body.ceo;
     org.country = req.body.country;
+    org.updatedAt = new Date();
+    org.products = req.body.products;
+    org.marketValue = req.body.marketValue;
+    org.address = req.body.address;
+    org.noOfEmployees = req.body.noOfEmployees;
+    org.employees = req.body.employees;
     res.send(org);
 });
 router.delete("/:id", (req, res) => {
@@ -57,7 +69,6 @@ router.delete("/:id", (req, res) => {
     let idx = database.indexOf(org);
     database.splice(idx, 1);
     res.send({
-        newLength: database.length - 1,
         removed: `id${req.params.id}`,
     });
 });
